@@ -12,7 +12,7 @@ class Window(Frame):
         self.client = client
         self.master.title("App Chat - " + self.name)
 
-    def send_msg(self):
+    def send_msg(self, ev = '0'):
         msg = self.MessageInput.get()
         if len(msg) > 0:
             try:
@@ -44,6 +44,7 @@ class Window(Frame):
 
         btnSendMessage = Button(self.master, text="Send", width=20, command=self.send_msg)
         btnSendMessage.grid(row=2, column=0, padx=10, pady=10)
+        self.master.bind("<Return>", self.send_msg)
 
         thread = threading.Thread(target=self.receive_msg)
         thread.daemon = True

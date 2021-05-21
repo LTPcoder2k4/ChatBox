@@ -3,8 +3,8 @@ import socket
 
 class Client:
     def __init__(self):
-        SERVER = "3.141.177.1"
-        PORT = 15923
+        SERVER = "13.59.15.185"
+        PORT = 16533
         ADDR = (SERVER, PORT)
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.client.connect(ADDR)

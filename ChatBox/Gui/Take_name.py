@@ -17,7 +17,7 @@ class Window(Frame):
         window = Chat.Window(tk, self.client, self.name)
         window.chat_gui()
 
-    def return_name(self):
+    def return_name(self, ev='0'):
         self.name = self.inp.get()
         if len(self.name) > 0:
             self.client.send(self.name)
@@ -28,6 +28,7 @@ class Window(Frame):
         lbl = Label(text="Your name: ", font=("Times New Roman", 30))
         self.inp = Entry(font=("Times New Roman", 30))
         btn = Button(text="Enter", height=5, width=30, font=("Times New Roman", 15), command=self.return_name)
+        self.master.bind("<Return>", self.return_name)
         lbl.pack(fill=X)
         self.inp.pack()
         btn.pack()
