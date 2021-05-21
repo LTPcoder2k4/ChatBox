@@ -31,8 +31,11 @@ class Server:
     def announce(self, conn, msg):
         for c in self.list_connected:
             if c != conn:
-                message = msg.encode(self.FORMAT)
-                c.send(message)
+                try:
+                    message = msg.encode(self.FORMAT)
+                    c.send(message)
+                except:
+                    self.list_connected.remove(conn)
 
     def handle_client(self, conn):
         name = self.take_name(conn)

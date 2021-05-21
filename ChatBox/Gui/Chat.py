@@ -11,6 +11,7 @@ class Window(Frame):
         self.MessageInput = Entry()
         self.client = client
         self.master.title("App Chat - " + self.name)
+        self.master.iconbitmap("./img/logo.ico")
 
     def send_msg(self, ev = '0'):
         msg = self.MessageInput.get()

@@ -11,6 +11,7 @@ class Window(Frame):
         self.client = client
         self.master.title("Input your name")
         self.master.geometry("400x200")
+        self.master.iconbitmap("./img/logo.ico")
 
     def change_window(self):
         tk = Tk()
