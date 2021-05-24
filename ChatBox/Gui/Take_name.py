@@ -3,19 +3,20 @@ from Gui import Chat
 
 
 class Window(Frame):
-    def __init__(self, master, client):
+    def __init__(self, master, client, db):
         Frame.__init__(self, master)
         self.master = master
         self.name = ''
         self.inp = Entry()
         self.client = client
+        self.db = db
         self.master.title("Input your name")
         self.master.geometry("400x200")
-        self.master.iconbitmap("./img/logo.ico")
+        self.master.iconbitmap("./img/logo-app.ico")
 
     def change_window(self):
         tk = Tk()
-        window = Chat.Window(tk, self.client, self.name)
+        window = Chat.Window(tk, self.client, self.name, self.db)
         window.chat_gui()
 
     def return_name(self, ev='0'):

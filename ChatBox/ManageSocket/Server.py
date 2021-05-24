@@ -3,16 +3,19 @@ import threading
 
 
 class Server:
-    def __init__(self):
+    def __init__(self, app, db):
         PORT = 5050
-        SERVER = "127.0.0.1"
+        SERVER = "192.168.1.8"
         ADDR = (SERVER, PORT)
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(ADDR)
 
-        self.LIMIT = 64
+        self.LIMIT = 2048
         self.FORMAT = 'utf-8'
         self.list_connected = []
+        self.app = app
+        self.app.master.title(SERVER)
+        self.db = db
 
     def take_name(self, conn):
         get_name = False
@@ -50,7 +53,8 @@ class Server:
                 pass
             return
 
-        print(f"[NEW CONNECTION] {name} connected.")
+        self.app.update_msg(f"[NEW CONNECTION] {name} connected.")
+        self.db.push_data(f"[NEW CONNECTION] {name} connected.")
         self.announce(conn, f"[NEW CONNECTION] {name} connected.")
 
         connected = True
@@ -63,17 +67,20 @@ class Server:
 
             if len(msg) > 0:
                 msg = f"[{name}]: {msg}"
-                print(msg)
+                self.app.update_msg(msg)
+                self.db.push_data(msg)
                 #Send message to others connection
                 self.announce(conn, msg)
 
         conn.close()
         self.list_connected.remove(conn)
-        print(f"[DISCONNECTION] {name} disconected.")
+        self.app.update_msg(f"[DISCONNECTION] {name} disconected.")
+        self.db.push_data(f"[DISCONNECTION] {name} disconected.")
         self.announce(conn, f"[DISCONNECTION] {name} disconected.")
 
     def start(self):
-        print("[STARTING] Server is starting...")
+        self.app.update_msg("[STARTING] Server is starting...")
+        self.app.update_msg(self.db.query())
         self.server.listen()
         while True:
             conn, addr = self.server.accept()
@@ -83,5 +90,4 @@ class Server:
 
 
 if __name__ == "__main__":
-    run = Server()
-    run.start()
+    print("Please open admin.py")
